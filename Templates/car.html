@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CarXpert - Used Car Listings</title>
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Bootstrap Bundle JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.5/font/bootstrap-icons.min.css">
+
+    <!-- Font Awesome (Optional Icons) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+
+    <!-- Favicon -->
+    <link rel="icon" href="{{ url_for('static', filename='car_logo-Photoroom.png') }}">
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+        }
+
+        .navbar {
+            background-color: white;
+            padding: 10px 20px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .navbar-brand {
+            display: flex;
+            align-items: center;
+        }
+
+        .navbar-brand img {
+            margin-left: 40px;
+            height: 40px;
+            width: auto;
+            margin-right: 10px;
+        }
+
+        .brand-text {
+            margin-left: 30px;
+            font-size: 24px;
+            font-weight: bold;
+            font-family: monospace;
+        }
+
+        .predict-btn {
+            background-color: #5f4fee;
+            color: white;
+            border-radius: 20px;
+            padding: 8px 15px;
+            border: none;
+            transition: background-color 0.3s;
+        }
+
+        .predict-btn:hover {
+            background-color: blue;
+            color: white;
+        }
+
+        .admin-icon-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 42px;
+            height: 42px;
+            border: 1.5px solid black;
+            border-radius: 50%;
+            color: black;
+            background-color: white;
+            transition: 0.3s ease-in-out;
+            font-size: 20px;
+        }
+
+        .admin-icon-btn:hover {
+            background-color: #f0f0f0;
+            color: #007bff;
+        }
+
+        .section-title {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        .car-card {
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            background: white;
+            text-align: center;
+            padding: 10px;
+        }
+
+        .car-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .car-card h5 {
+            font-size: 18px;
+            margin: 10px 0;
+        }
+
+        .car-card p {
+            font-size: 16px;
+            color: #555;
+        }
+
+        .accordion-button:not(.collapsed) {
+            background-color: #89bdf8;
+            color: black;
+        }
+
+        .footer {
+            background-color: #0a3764;
+            color: white;
+            padding: 20px 0;
+            font-size: 14px;
+        }
+
+        .footer a {
+            color: white;
+            text-decoration: none;
+            margin: 0 15px;
+        }
+
+        .footer a:hover {
+            text-decoration: underline;
+        }
+
+        .social-icons a {
+            margin: 0 10px;
+            color: white;
+            font-size: 20px;
+        }
+
+        .social-icons a:hover {
+            color: #ff4500;
+        }
+          .predict-btn {
+            background-color: #ff4500 !important;
+            color: white !important;
+            border-radius: 20px;
+            padding: 8px 15px;
+            border: none;
+            transition: background-color 0.3s;
+        }
+
+        .predict-btn:hover {
+            background-color: blue !important;
+            color: white !important;
+        }
+
+        .user-info-sidebar {
+            position: fixed;
+            top: 80px;
+            right: -350px; /* hidden by default */
+            width: 300px;
+            background-color: #ffffff;
+            border-radius: 10px 0 0 10px;
+            z-index: 1050;
+            transition: right 0.4s ease-in-out;
+            box-shadow: -2px 0 10px rgba(0, 0, 0, 0.15);
+        }
+        .user-info-sidebar.active {
+            right: 20px; /* show sidebar */
+        }
+
+        /* Footer Styles */
+        .footer {
+            background-color: #0a3764;
+            color: white;
+            padding: 0px 0;
+            font-size: 14px;
+        }
+
+        .footer-link {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 16px;
+            transition: color 0.3s;
+        }
+
+        .footer-link:hover {
+            color:#548cf3;
+            text-decoration: none;
+        }
+
+        .footer-heading {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color:#548cf3;
+        }
+
+        .footer-text {
+            font-size: 14px;
+            line-height: 1.6;
+            color: #e0e0e0;
+        }
+
+        .contact-info p {
+            margin-bottom: 8px;
+            font-size: 14px;
+            color: #e0e0e0;
+        }
+
+        .social-icon {
+            display: inline-block;
+            width: 36px;
+            height: 36px;
+            line-height: 36px;
+            text-align: center;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            margin: 0 5px;
+            transition: all 0.3s;
+        }
+
+        .social-icon:hover {
+            background-color: #548cf3;
+            transform: translateY(-3px);
+        }
+
+        .copyright {
+            font-size: 13px;
+            color: #b0b0b0;
+            margin-top: 10px;
+        }
+
+        .footer-divider {
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            margin: 0px 0;
+        }
+
+</style>
+</head>
+<body>
+
+    <!-- User Info Sidebar -->
+    <div id="userSidebar" class="user-info-sidebar bg-white shadow p-4 position-fixed end-0 top-0" 
+    style="width: 300px; height: auto; max-height: 90vh; overflow-y: auto; transform: translateX(100%); transition: transform 0.3s ease-in-out; z-index: 1050;">
+    
+    <!-- Header with Close Button -->
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h5 class="mb-0">👋 Welcome, {{ user_details.name }}</h5>
+        <button class="btn-close" onclick="toggleSidebar()"></button>
+    </div>
+    
+    <hr>
+
+    <!-- User Info -->
+    <p><strong>Username:</strong> {{ user_details.username }}</p>
+    <p><strong>Email:</strong> {{ user_details.email }}</p>
+    <p><strong>Phone:</strong> {{ user_details.phone }}</p>
+    <p><strong>Address:</strong><br>
+        {% if user_details.address %}{{ user_details.address }}<br>{% endif %}
+        {% if user_details.city %}{{ user_details.city }}<br>{% endif %}
+        {% if user_details.state %}{{ user_details.state }}<br>{% endif %}
+        {% if user_details.country %}{{ user_details.country }}<br>{% endif %}
+        {% if user_details.zip %}{{ user_details.zip }}{% endif %}
+    </p>
+
+    <hr>
+
+    <!-- Logout Button -->
+    <a href="/logout" class="btn btn-outline-danger w-100 d-flex align-items-center justify-content-center gap-2">
+        <i class="bi bi-box-arrow-right"></i> Logout
+    </a>
+    </div>
+
+
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-expand-lg">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">
+                <img src="{{ url_for('static', filename='car_logo-Photoroom.png') }}" alt="CarXpert Logo">
+                <span class="brand-text">CarXpert</span>
+            </a>
+
+            <div class="d-flex align-items-center">
+                <!-- Predict Button -->
+                <button class="btn predict-btn me-3" onclick="window.location.href='/predict';">
+                    Predict Price
+                </button>
+
+            <button type="button" class="admin-icon-btn" onclick="toggleSidebar()" style="background: none; border: none;">
+                <i class="bi bi-person-circle fs-4"></i>
+            </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Car Listings Section -->
+    <div class="container mt-5">
+        <h2 class="section-title">Popular Pre-Owned Cars</h2>
+        <div id="carCarousel" class="carousel slide" data-bs-ride="carousel">
+            <div class="carousel-inner">
+                <!-- Slide 1 -->
+                <div class="carousel-item active">
+                    <div class="row text-center">
+                        <div class="col-md-4">
+                            <div class="car-card">
+                                <img src="{{ url_for('static', filename='grand_i10.jpg') }}" alt="Hyundai Grand i10">
+                                <h5>Used Hyundai Grand i10</h5>
+                                <p>Rs. 2.5 Lakh onwards</p>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="car-card">
+                                <img src="{{ url_for('static', filename='Elite_i20.webp') }}" alt="Hyundai Elite i20">
+                                <h5>Used Hyundai Elite i20</h5>
+                                <p>Rs. 2 Lakh onwards</p>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="car-card">
+                                <img src="{{ url_for('static', filename='Creta2.jpg') }}" alt="Hyundai Creta">
+                                <h5>Used Hyundai Creta</h5>
+                                <p>Rs. 6.5 Lakh onwards</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Slide 2 -->
+                <div class="carousel-item">
+                    <div class="row text-center">
+                        <div class="col-md-4">
+                            <div class="car-card">
+                                <img src="{{ url_for('static', filename='swift.jpg') }}" alt="Maruti Swift">
+                                <h5>Used Maruti Swift</h5>
+                                <p>Rs. 3 Lakh onwards</p>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="car-card">
+                                <img src="{{ url_for('static', filename='Honda_city.avif') }}" alt="Honda City">
+                                <h5>Used Honda City</h5>
+                                <p>Rs. 5.5 Lakh onwards</p>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="car-card">
+                                <img src="{{ url_for('static', filename='nexon.webp') }}" alt="Tata Nexon">
+                                <h5>Used Tata Nexon</h5>
+                                <p>Rs. 7 Lakh onwards</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Carousel Controls -->
+            <button class="carousel-control-prev" type="button" data-bs-target="#carCarousel" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon bg-dark rounded-circle p-3"></span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carCarousel" data-bs-slide="next">
+                <span class="carousel-control-next-icon bg-dark rounded-circle p-3"></span>
+            </button>
+        </div>
+    </div>
+
+<!-- FAQ Section -->
+<div class="container mt-5">
+    <h2 class="section-title">FAQ's</h2>
+    <div class="accordion" id="faqAccordion">
+
+        <!-- Question 1 -->
+        <div class="accordion-item">
+            <h2 class="accordion-header">
+                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#faq1" 
+                        aria-expanded="false" aria-controls="faq1">
+                    How does CarXpert predict the resale value of a car?
+                </button>
+            </h2>
+            <div id="faq1" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                <div class="accordion-body">
+                    CarXpert uses machine learning algorithms to predict car resale prices based on factors like brand, model, 
+                    year of manufacture, fuel type, mileage, and current market trends.
+                </div>
+            </div>
+        </div>
+
+        <!-- Question 2 -->
+        <div class="accordion-item">
+            <h2 class="accordion-header">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq2" 
+                        aria-expanded="false" aria-controls="faq2">
+                    Is CarXpert's car valuation tool free to use?
+                </button>
+            </h2>
+            <div id="faq2" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                <div class="accordion-body">
+                    Yes! CarXpert offers completely free car price estimation without requiring any registration or payment.
+                </div>
+            </div>
+        </div>
+
+        <!-- Question 3 -->
+        <div class="accordion-item">
+            <h2 class="accordion-header">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq3" 
+                        aria-expanded="false" aria-controls="faq3">
+                    What details do I need to enter for car price prediction?
+                </button>
+            </h2>
+            <div id="faq3" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                <div class="accordion-body">
+                    To get an accurate price prediction, you need to enter:
+                    <ul>
+                        <li>Car Make and Model</li>
+                        <li>Year of Manufacture</li>
+                        <li>Fuel Type (Petrol/Diesel/Electric/CNG)</li>
+                        <li>Kilometers Driven</li>
+                        <li>Number of Owner</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Question 4 -->
+        <div class="accordion-item">
+            <h2 class="accordion-header">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq4" 
+                        aria-expanded="false" aria-controls="faq4">
+                    How accurate is CarXpert's price prediction?
+                </button>
+            </h2>
+            <div id="faq4" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                <div class="accordion-body">
+                    CarXpert's AI-powered valuation model is trained on thousands of real-world car transactions. While prices are not 100% fixed, our model ensures an accuracy of over 90% based on historical data and market conditions.
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+    <!-- Footer -->
+    <footer class="footer text-center">
+        <div class="container py-3">
+            <div class="row">
+                <div class="col-md-4 mb-3 mb-md-0">
+                    <a href="{{ url_for('aboutus') }}" class="footer-link mb-2 d-inline-block">About Us</a>
+                    <h5 class="footer-heading">CarXpert</h5>
+                    <p class="footer-text">Your trusted partner for accurate car price predictions using advanced AI technology.</p>
+                </div>
+                <div class="col-md-4 mb-3 mb-md-0">
+                    <h5 class="footer-heading">Contact Us</h5>
+                    <div class="contact-info">
+                        <p><i class="fas fa-envelope me-2"></i> khenijiya571@gmail.com</p>
+                        <p><i class="fas fa-phone me-2"></i> +91 87807 14587</p>
+                        <p><i class="fas fa-map-marker-alt me-2"></i> Surat, Gujarat, India</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <h5 class="footer-heading">Follow Us</h5>
+                    <div class="social-icons">
+                        <a href="#" class="social-icon"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+            </div>
+            <hr class="footer-divider">
+            <div class="row">
+                <div class="col-md-12">
+                    <p class="copyright">&copy; 2023 CarXpert. All rights reserved.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+  
+      <!-- Sidebar Toggle Script -->
+<script>
+    function toggleSidebar() {
+        const sidebar = document.getElementById('userSidebar');
+        sidebar.style.transform = sidebar.style.transform === 'translateX(0%)'
+            ? 'translateX(100%)'
+            : 'translateX(0%)';
+    }
+     // Optional: click outside to close
+     window.addEventListener('click', function (e) {
+        const sidebar = document.getElementById('userSidebar');
+        const icon = document.querySelector('.admin-icon-btn');
+        if (!sidebar.contains(e.target) && !icon.contains(e.target)) {
+            sidebar.style.transform = 'translateX(100%)';
+        }
+        });
+    </script>
+</body>
+</html>

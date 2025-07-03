@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Forgot Password - CarXpert</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <!-- Favicon -->
+    <link rel="icon" href="{{ url_for('static', filename='car_logo-Photoroom.png') }}">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #86b6e5, #f3f4f6);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .forgot-container {
+            width: 100%;
+            max-width: 450px;
+            padding: 20px;
+        }
+
+        .card {
+            border-radius: 16px;
+            background-color: rgba(255, 255, 255, 0.95);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+            padding: 40px 30px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .logo-container {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .logo-container img {
+            width: 60px;
+            height: auto;
+            margin-bottom: 15px;
+        }
+
+        .card h3 {
+            text-align: center;
+            font-weight: 700;
+            margin-bottom: 25px;
+            color: #0a3764;
+            font-size: 24px;
+        }
+
+        .form-label {
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+
+        .form-control {
+            border-radius: 10px;
+            border: 2px solid #e0e0e0;
+            padding: 12px 15px;
+            font-size: 15px;
+            transition: all 0.3s ease;
+            background-color: #f8f9fa;
+        }
+
+        .form-control:focus {
+            border-color: #0a3764;
+            box-shadow: 0 0 0 3px rgba(10, 55, 100, 0.2);
+            background-color: #fff;
+        }
+
+        .btn-primary {
+            background-color: #0a3764;
+            border: none;
+            transition: all 0.3s ease;
+            border-radius: 10px;
+            padding: 12px 20px;
+            font-weight: 600;
+            font-size: 16px;
+            margin-top: 10px;
+            box-shadow: 0 4px 6px rgba(10, 55, 100, 0.2);
+        }
+
+        .btn-primary:hover {
+            background-color: #074f95;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 8px rgba(10, 55, 100, 0.3);
+        }
+
+        .btn-primary:active {
+            transform: translateY(0);
+        }
+
+        .back-link {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+            color: #0a3764;
+            font-weight: 500;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .back-link:hover {
+            color: #074f95;
+            text-decoration: underline;
+        }
+
+        .alert {
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 20px;
+            border: none;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .alert-success {
+            background-color: #d4edda;
+            color: #155724;
+        }
+
+        .alert-danger {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+
+        .btn-close {
+            opacity: 0.7;
+            transition: opacity 0.3s ease;
+        }
+
+        .btn-close:hover {
+            opacity: 1;
+        }
+
+        .info-text {
+            text-align: center;
+            color: #6c757d;
+            font-size: 14px;
+            margin-bottom: 20px;
+            line-height: 1.5;
+        }
+    </style>
+</head>
+<body>
+<div class="forgot-container">
+    <div class="card">
+        <div class="logo-container">
+            <img src="{{ url_for('static', filename='car_logo-Photoroom.png') }}" alt="CarXpert Logo">
+        </div>
+        <h3>Forgot Password</h3>
+        
+        <p class="info-text">Enter your registered email address below and we'll send you a link to reset your password.</p>
+        
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+                        {{ message }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+        
+        <form method="POST" action="/forgot">
+            <div class="mb-4">
+                <label for="email" class="form-label">Registered Email</label>
+                <div class="input-group">
+                    <span class="input-group-text bg-light border-end-0">
+                        <i class="fas fa-envelope text-muted"></i>
+                    </span>
+                    <input type="email" class="form-control border-start-0" name="email" id="email" required>
+                </div>
+            </div>
+            
+            <button type="submit" class="btn btn-primary w-100">Send Reset Link</button>
+            <a href="/login" class="back-link">Back to Login</a>
+        </form>
+    </div>
+</div>
+
+<script>
+    // Form validation
+    document.querySelector('form').addEventListener('submit', function(e) {
+        const email = document.getElementById('email').value.trim();
+        
+        if (!email) {
+            e.preventDefault();
+            alert('Please enter your email address.');
+        }
+    });
+</script>
+</body>
+</html>

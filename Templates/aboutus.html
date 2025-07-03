@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>About Us - CarXpert</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Bootstrap Bundle JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.5/font/bootstrap-icons.min.css">
+
+    <!-- Font Awesome (Optional Icons) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+
+    <!-- Favicon -->
+    <link rel="icon" href="{{ url_for('static', filename='car_logo-Photoroom.png') }}">
+      <style>
+        body {
+          background-color: #ffffff;
+          font-family: 'Segoe UI', sans-serif;
+        }
+        .section {
+          padding: 80px 0;
+        }
+        .title {
+          font-size: 36px;
+          font-weight: bold;
+          color: #1c2e4a;
+          margin-bottom: 20px;
+        }
+        .content {
+          font-size: 18px;
+          color: #4f4f4f;
+          line-height: 1.8;
+        }
+        .image-rounded {
+          border-radius: 20px;
+          max-width: 100%;
+          height: auto;
+          box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+        .signature {
+          margin-top: 20px;
+          font-style: italic;
+          color: #888;
+          font-size: 16px;
+        }
+        .navbar {
+            background-color: white;
+            padding: 10px 20px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .navbar-brand {
+            display: flex;
+            align-items: center;
+        }
+
+        .navbar-brand img {
+            margin-left: 40px;
+            height: 40px;
+            width: auto;
+            margin-right: 10px;
+        }
+
+        .brand-text {
+            margin-left: 30px;
+            font-size: 24px;
+            font-weight: bold;
+            font-family: monospace;
+        }
+        .footer {
+            background-color: #0a3764;
+            color: white;
+            padding: 20px 0;
+            font-size: 14px;
+        }
+
+        .footer a {
+            color: white;
+            text-decoration: none;
+            margin: 0 15px;
+        }
+
+        .footer a:hover {
+            text-decoration: underline;
+        }
+
+        .social-icons a {
+            margin: 0 10px;
+            color: white;
+            font-size: 20px;
+        }
+
+        .social-icons a:hover {
+            color: #548cf3;
+        }
+        .back-home-btn {
+          background-color: #0d6efd;
+          color: white;
+          padding: 10px 25px;
+          font-size: 16px;
+          border-radius: 30px;
+          border: none;
+          transition: background-color 0.3s ease, transform 0.2s ease;
+          box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+          text-decoration: none;
+          display: inline-block;
+      }
+
+      .back-home-btn:hover {
+          background-color: #084298;
+          transform: scale(1.05);
+          text-decoration: none;
+          color: white;
+      }
+
+      /* Footer Styles */
+      .footer {
+          background-color: #0a3764;
+          color: white;
+          padding: 0px 0;
+          font-size: 14px;
+      }
+
+      .footer-link {
+          color: white;
+          text-decoration: none;
+          font-weight: 500;
+          font-size: 16px;
+          transition: color 0.3s;
+      }
+
+      .footer-link:hover {
+          color: #548cf3;
+          text-decoration: none;
+      }
+
+      .footer-heading {
+          font-size: 18px;
+          font-weight: 600;
+          margin-bottom: 15px;
+          color: #548cf3;
+      }
+
+      .footer-text {
+          font-size: 14px;
+          line-height: 1.6;
+          color: #e0e0e0;
+      }
+
+      .contact-info p {
+          margin-bottom: 8px;
+          font-size: 14px;
+          color: #e0e0e0;
+      }
+
+      .social-icon {
+          display: inline-block;
+          width: 36px;
+          height: 36px;
+          line-height: 36px;
+          text-align: center;
+          background-color: rgba(255, 255, 255, 0.1);
+          border-radius: 50%;
+          margin: 0 5px;
+          transition: all 0.3s;
+      }
+
+      .social-icon:hover {
+          background-color: #548cf3;
+          transform: translateY(-3px);
+      }
+
+      .copyright {
+          font-size: 13px;
+          color: #b0b0b0;
+          margin-top: 10px;
+      }
+
+      .footer-divider {
+          border-top: 1px solid rgba(255, 255, 255, 0.1);
+          margin: 0px 0;
+      }
+  </style>
+</head>
+<body>
+   <!-- Navigation Bar -->
+   <nav class="navbar navbar-expand-lg">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">
+            <img src="{{ url_for('static', filename='car_logo-Photoroom.png') }}" alt="CarXpert Logo">
+            <span class="brand-text">CarXpert</span>
+        </a>
+    </div>
+</nav>
+  
+
+<div class="container section">
+  <div class="row align-items-center">
+    <div class="col-md-6">
+      <h2 class="title">Our Mission</h2>
+      <p class="content">
+        At CarXpert, we believe that technology can simplify the way people sell and buy used cars. Our mission is to bring transparency and fairness into the resale market using intelligent machine learning models. By focusing on data, trust, and user experience, we're helping individuals make confident and informed car pricing decisions every day.
+      </p>
+      <p class="signature">— Jiya, Diya & Pankti</p>
+    </div>
+    <div class="col-md-6 text-center">
+      <img src="{{ url_for('static', filename='aboutus1.jpg') }}" alt="Team CarXpert" class="image-rounded">
+    </div>
+  </div>
+</div>
+
+<div class="container section">
+  <div class="row align-items-center flex-md-row-reverse">
+    <div class="col-md-6">
+      <h2 class="title">Our Story</h2>
+      <p class="content">
+        What started as a mini project quickly will turn into something bigger — an innovative platform that solves a real-world problem. As three students passionate about coding and cars, we created CarXpert to bridge the gap between buyers, sellers, and real car value. Every line of code was written with the goal to make auto-selling smarter, faster, and fairer.
+      </p>
+      <p class="signature">— Built with ❤️ by the CarXpert Team</p>
+    </div>
+    <div class="col-md-6 text-center">
+      <img src="{{ url_for('static', filename='aboutus2.avif') }}" alt="CarXpert Story" class="image-rounded">
+    </div>
+  </div>
+</div>
+
+<!-- Back to Home Button -->
+<div class="container text-center mb-5">
+  <a href="{{ url_for('car') }}" class="back-home-btn">
+    <i class="bi bi-arrow-left-circle"></i> Back 
+  </a>
+</div>
+
+    <!-- Footer -->
+    <footer class="footer text-center">
+      <div class="container py-4">
+          <div class="row">
+              <div class="col-md-4 mb-4 mb-md-0">
+                  <h5 class="footer-heading">CarXpert</h5>
+                  <p class="footer-text">Your trusted partner for accurate car price predictions using advanced AI technology.</p>
+                  <a href="{{ url_for('aboutus') }}" class="footer-link">About Us</a>
+              </div>
+              <div class="col-md-4 mb-4 mb-md-0">
+                  <h5 class="footer-heading">Contact Us</h5>
+                  <div class="contact-info">
+                      <p><i class="fas fa-envelope me-2"></i> khenijiya571@gmail.com</p>
+                      <p><i class="fas fa-phone me-2"></i> +91 87807 14587</p>
+                      <p><i class="fas fa-map-marker-alt me-2"></i> Surat, Gujarat, India</p>
+                  </div>
+              </div>
+              <div class="col-md-4">
+                  <h5 class="footer-heading">Follow Us</h5>
+                  <div class="social-icons mt-3">
+                      <a href="#" class="social-icon"><i class="fab fa-facebook-f"></i></a>
+                      <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
+                      <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
+                      <a href="#" class="social-icon"><i class="fab fa-linkedin-in"></i></a>
+                  </div>
+              </div>
+          </div>
+          <hr class="footer-divider">
+          <div class="row mt-3">
+              <div class="col-md-12">
+                  <p class="copyright">&copy; 2023 CarXpert. All rights reserved.</p>
+              </div>
+          </div>
+      </div>
+  </footer>
+</body>
+</html>
+
